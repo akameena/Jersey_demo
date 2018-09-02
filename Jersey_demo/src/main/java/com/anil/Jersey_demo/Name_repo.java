@@ -32,8 +32,10 @@ public class Name_repo {
 		
 		for(Name obj:names)
 		{
-			if(obj.getFname()==fname)
+			
+			if(obj.getFname().equals(fname))
 			{
+				
 				return obj;
 			}
 		}

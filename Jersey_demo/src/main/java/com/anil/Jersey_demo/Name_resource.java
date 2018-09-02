@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -22,6 +23,15 @@ public class Name_resource {
 		return repo.getnames();
 				
 	}
+	
+	@GET
+	@Path("name/{fname}")
+	@Produces(MediaType.APPLICATION_XML )
+	public Name name(@PathParam("fname") String fname)
+	{
+		return repo.getname(fname);
+	}
+	
 	@Path("nameadd")
 	@POST
 	public Name addname(Name nobj)
