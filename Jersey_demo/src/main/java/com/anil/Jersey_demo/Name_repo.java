@@ -39,5 +39,9 @@ public class Name_repo {
 		}
 		return null;
 	}
+	public void create_obj(Name nobj) {
+		names.add(nobj);
+		
+	}
 
 }
