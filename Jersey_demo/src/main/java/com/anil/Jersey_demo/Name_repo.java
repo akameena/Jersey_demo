@@ -88,9 +88,30 @@ public class Name_repo {
 			PreparedStatement st = con.prepareStatement(query);
 			
 			st.setString(1, nobj.getFname());
-			st.setString(2, nobj.getLname());
+			st.setString(2, nobj.getMname());
 			st.setString(3, nobj.getLname());
 			st.setInt(4,4);
+			
+			st.executeUpdate();
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+	}
+public void update_obj(Name nobj) {
+		
+		String query = "update data1 set fname =?  where lname=?";
+		Name obj=null;
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			
+			//st.setString(2, nobj.getFname());
+			st.setString(1, nobj.getFname());
+			st.setString(2, nobj.getLname());
+			//st.setInt(2,4);
 			
 			st.executeUpdate();
 			
