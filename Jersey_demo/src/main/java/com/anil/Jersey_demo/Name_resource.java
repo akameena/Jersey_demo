@@ -17,7 +17,7 @@ public class Name_resource {
 	Name_repo repo = new Name_repo();
 	
 	@GET
-	@Produces(MediaType.APPLICATION_XML )
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public List<Name> names()
 	{
 		return repo.getnames();
@@ -29,6 +29,7 @@ public class Name_resource {
 	@Produces(MediaType.APPLICATION_XML )
 	public Name name(@PathParam("fname") String fname)
 	{
+		System.out.println("resource2");
 		return repo.getname(fname);
 	}
 	

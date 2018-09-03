@@ -4,45 +4,101 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.crypto.provider.RSACipher;
+
+import java.sql.*;
+
 public class Name_repo {
-	
-	List<Name> names;
+	Connection con = null;
 	public Name_repo(){
-		names = new ArrayList<>();
-		Name obj1 = new Name();
-		obj1.setFname("anil");
-		obj1.setLname("meena");
-		obj1.setMname("kumar");
 		
-		Name obj2 = new Name();
-		obj2.setFname("harish");
-		obj2.setLname("saini");
-		obj2.setMname("kumar");
+		String url = "jdbc:mysql://localhost:3306/jerseydb";
+		String user = "root";
+		String pass = "root";
 		
-		names.add(obj1);
-		names.add(obj2);
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(url, user, pass);
+			
+			
+		} 
+		catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 		
-	}
+		
+}
 	public List<Name> getnames()
 	{
+		
+		List<Name> names = new ArrayList<>();
+		String query = "select * from data1";
+		
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next())
+			{
+				Name obj = new Name();
+				obj.setFname(rs.getString(1));
+				obj.setMname(rs.getString(2));
+				obj.setLname(rs.getString(3));
+				names.add(obj);
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
 		return names;
 	}
 	public Name getname(String fname)
-	{
-		
-		for(Name obj:names)
-		{
-			
-			if(obj.getFname().equals(fname))
+	{	System.out.println("repo");
+		String query = "select * from data1 where mname="+fname;
+		System.out.println(query);
+		Name obj=null;
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			if(rs.next())
 			{
+				obj = new Name();
+				obj.setFname(rs.getString(1));
+				obj.setMname(rs.getString(2));
+				obj.setLname(rs.getString(3));
 				
-				return obj;
 			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
 		}
-		return null;
+		
+		System.out.println("repo3");
+		return obj;
+		
 	}
+	
 	public void create_obj(Name nobj) {
-		names.add(nobj);
+		
+		String query = "insert into data1 values(?,?,?,?)";
+		Name obj=null;
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			
+			st.setString(1, nobj.getFname());
+			st.setString(2, nobj.getLname());
+			st.setString(3, nobj.getLname());
+			st.setInt(4,4);
+			
+			st.executeUpdate();
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
 		
 	}
 
